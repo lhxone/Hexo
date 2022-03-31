@@ -54,6 +54,8 @@ menu:
   archives: /archives/ || fas fa-folder-open
   # categories: /categories/ || fas fa-layer-group
   tags: /tags/ || fas fa-tags
+  PDF: /PDF || fas fa-file-pdf
+  mirror: /mirror || fas fa-globe
   About: http://github.com/lhxone || fab - fa-github
   # You can add a secondary menu like follow.
   # xxx1: javascript:; || fa(s|r|l|d|b) fa-xxx
@@ -228,9 +230,9 @@ footer:
     version: true
   # Beian information for Chinese users, see: http://www.miitbeian.gov.cn/
   beian:
-    enable: false
+    enable: true
     # 备案 XXXXXXXX 号
-    icp:
+    icp: 	鲁ICP备2022006514号
   # Any custom text (e.g. Hosted by <a href="https://pages.github.com/" rel="noopener" target="_blank">Github Pages</a>)
   custom:
     enable: false
@@ -297,7 +299,7 @@ author:
     # Optional values: turn | shake
     animation: shake
   # Your favorite motto.
-  motto: 平白无奇的工具人罢了
+  motto: Miklos Ventura
 
 # Social links
 # Value before `||` is the target link, value after `||` is the name of FontAwesome icon.
@@ -377,9 +379,9 @@ heading_line: true
 reward:
   enable: true
   # Your QR code for collecting money.
-  alipay: https://github.com/lhxone/Code-Library/blob/img/IMG_1625.JPG
+  alipay: /static/images/IMG_4133.JPG
 
-  wechat: https://github.com/lhxone/Code-Library/blob/img/IMG_1624.JPG
+  wechat: /static/images/IMG_4132.JPG
 
 
 # ---------------------------------------------------------------
@@ -635,7 +637,7 @@ google_analytics:
 
 # Baidu analytics ID
 # See: https://tongji.baidu.com/
-baidu_analytics: e08ed8071f38706bf43a3a52d1c0686d
+baidu_analytics: 089f5b311cfd8622cedcb20c78d5218d
 
 # Tencent analytics ID
 # See: https://v2.ta.qq.com/

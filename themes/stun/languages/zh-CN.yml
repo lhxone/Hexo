@@ -3,6 +3,8 @@ title:
   home: 首页
   archive: 归档
   category: 分类
+  PDF: PDF索引
+  mirror: 镜像
   tag: 标签
   About: 关于我
 
@@ -15,6 +17,8 @@ menu:
   home: 首页
   archives: 归档
   categories: 分类
+  PDF: PDF索引
+  mirror: 镜像
   tags: 标签
   About: 关于我
 
@@ -22,6 +26,8 @@ menu:
 page:
   tags: 标签
   categories: 分类
+  PDF: PDF索引
+  mirror: 镜像
   posts-empty: 目前还没有文章哦！
   posts-total: 目前共计 %s 篇文章，继续加油！
 
@@ -32,6 +38,8 @@ sidebar:
   subscribe: 订阅
   archives: 归档
   categories: 分类
+  PDF: PDF索引
+  mirror: 镜像
   tags: 标签
   read_info: 你已阅读了
 

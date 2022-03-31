@@ -210,3 +210,47 @@ $(document).ready(function () {
   Stun.utils.pjaxReloadHeader()
   Stun.utils.pjaxReloadScrollIcon()
 })
+
+// lhxone add
+
+/**
+ * @deprecated 下载文件
+ * @param {string} url 
+ * @param {string} filename
+ */
+ handleFileDownload = (url, filename) => {
+  // 创建 a 标签
+  let a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  a.click();
+}
+
+/**
+ * @deprecated 处理 pdf url，使其不在浏览器打开
+ * @param {string} url
+ */
+handlePdfLink = (url, filename) => {
+  fetch(url, {
+    method: 'get',
+    responseType: 'arraybuffer',
+  })
+    .then(function (res) {
+      if (res.status !== 200) {
+        return res.json()
+      }
+      return res.arrayBuffer()
+    })
+    .then((blobRes) => {
+    	// 生成 Blob 对象，设置 type 等信息
+      const e = new Blob([blobRes], {
+        type: 'application/octet-stream',
+        'Content-Disposition':'attachment'
+      })
+      // 将 Blob 对象转为 url
+      const link = window.URL.createObjectURL(e)
+      handleFileDownload(link, filename)
+    }).catch(err => {
+      console.error(err)
+    })
+}
