@@ -38,41 +38,41 @@ tags: 实习日记
 
 需要引用源码中的某些文件，因此要获取安装过程中源码位置
 
->```py
->pwd = os.getcwd
->```
+```py
+pwd = os.getcwd()
+```
 
 需要编辑`Makefile`的某一项，示例地址：[stream](https://github.com/spack/spack/blob/develop/var/spack/repos/builtin/packages/stream/package.py)
 
->```py
-># 使用FileFilter正则表达式替换
->def edit(self, spec, prefix):
->    makefile = FileFilter('Makefile')
->
->    makefile.filter(r'^\s*CC\s*=.*',  'CC = '  + spack_cc)
->    makefile.filter(r'^\s*CXX\s*=.*', 'CXX = ' + spack_cxx)
->    makefile.filter(r'^\s*F77\s*=.*', 'F77 = ' + spack_f77)
->    makefile.filter(r'^\s*FC\s*=.*',  'FC = '  + spack_fc)
->```
+```py
+# 使用FileFilter正则表达式替换
+def edit(self, spec, prefix):
+    makefile = FileFilter('Makefile')
+
+    makefile.filter(r'^\s*CC\s*=.*',  'CC = '  + spack_cc)
+    makefile.filter(r'^\s*CXX\s*=.*', 'CXX = ' + spack_cxx)
+    makefile.filter(r'^\s*F77\s*=.*', 'F77 = ' + spack_f77)
+    makefile.filter(r'^\s*FC\s*=.*',  'FC = '  + spack_fc)
+```
 
 
 
 或编辑类似`make.inc`的文件，示例地址：[elk](https://github.com/spack/spack/blob/develop/var/spack/repos/builtin/packages/elk/package.py)
 
->```py
->def edit(self, spec, prefix):
->    config = {
->        'CC': 'cc',
->        'MAKE': 'make',
->    }
->
->    if '+blas' in spec:
->        config['BLAS_LIBS'] = spec['blas'].libs.joined()
->
->    with open('make.inc', 'w') as inc:
->        for key in config:
->            inc.write('{0} = {1}\n'.format(key, config[key]))
->```
+```py
+def edit(self, spec, prefix):
+    config = {
+        'CC': 'cc',
+        'MAKE': 'make',
+    }
+
+    if '+blas' in spec:
+        config['BLAS_LIBS'] = spec['blas'].libs.joined()
+
+    with open('make.inc', 'w') as inc:
+        for key in config:
+            inc.write('{0} = {1}\n'.format(key, config[key]))
+```
 
 编辑环境变量，示例地址：[cebench](https://github.com/spack/spack/blob/develop/var/spack/repos/builtin/packages/cbench/package.py)，[esmf](https://github.com/spack/spack/blob/develop/var/spack/repos/builtin/packages/esmf/package.py)(较复杂)
 
@@ -80,8 +80,12 @@ tags: 实习日记
 def edit(self, spec, prefix):
     env['PREFIX'] = prefix
     env['BLASLIB'] = spec['blas'].libs.ld_flags
-```
 
+# 或是
+    def setup_build_environment(self, env):
+        # The location of the PRESTO source tree
+        env.set('PRESTO', self.stage.source_path)
+```
 
 
 
@@ -92,6 +96,14 @@ def edit(self, spec, prefix):
 通过传递的`build_targets`参数，调用`make`
 
 
+常用操作：
+
+修改`build`目录(更喜欢用`with working_dir('src'):`)
+
+```py
+build_directory = 'src'
+make('target')
+```
 
 
 
