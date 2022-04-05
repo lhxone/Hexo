@@ -105,5 +105,56 @@ build_directory = 'src'
 make('target')
 ```
 
+### `setup_build_environment(self, env)`
+
+设置`build`阶段的环境变量，示例如下：
+
+```py
+    def setup_build_environment(self, env):
+        env.append_path('LD_LIBRARY_PATH', self.stage.source_path + '/lib')
+        env.set('PRESTO', self.stage.source_path)
+```
 
 
+# 其余方法
+
+
+
+build(spec, prefix)[source]
+Calls make, passing build_targets as targets.
+
+propertybuild_directory
+Returns the directory containing the main Makefile
+
+Returns
+build directory
+
+build_system_class= 'MakefilePackage'
+This attribute is used in UI queries that need to know the build system base class
+
+build_targets= []
+Targets for make during the build() phase
+
+build_time_test_callbacks= ['check']
+Callback names for build-time test
+
+check()[source]
+Searches the Makefile for targets test and check and runs them if found.
+
+edit(spec, prefix)[source]
+Edits the Makefile before calling make. This phase cannot be defaulted.
+
+install(spec, prefix)[source]
+Calls make, passing install_targets as targets.
+
+install_targets= ['install']
+Targets for make during the install() phase
+
+install_time_test_callbacks= ['installcheck']
+Callback names for install-time test
+
+installcheck()[source]
+Searches the Makefile for an installcheck target and runs it if found.
+
+phases= ['edit', 'build', 'install']
+Phases of a package that is built with an hand-written Makefile
