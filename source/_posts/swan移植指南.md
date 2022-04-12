@@ -53,10 +53,7 @@ make mpi
 
 ### spack安装代码
 
-
-`package.py`
-
-```python
+{% codeblock package.py lang:python %}
 from spack import *
 from os import *
 
@@ -91,4 +88,5 @@ class Swan(MakefilePackage):
     def install(self, spec, prefix):
         mkdir(prefix.bin)
         install('*.exe', prefix.bin)
-```
+{% endcodeblock %}
+
