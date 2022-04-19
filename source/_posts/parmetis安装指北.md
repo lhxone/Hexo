@@ -4,6 +4,7 @@ date: 2022-04-11 15:36:38
 tags: 
 - 实习日记
 - 安装指北
+- parmetis
 ---
 
 # PARMETIS/parmetis

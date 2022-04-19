@@ -1,7 +1,10 @@
 ---
 title: gromacs编译&测试
 date: 2022-02-23 14:12:12
-tags: 实习日记
+tags: 
+- 实习日记
+- 安装指北
+- gromacs
 ---
 
 

@@ -1,7 +1,9 @@
 ---
 title: Mac虚拟机安装指北(适用于Big Sur及Catalina)
 date: 2021-03-14 10:30:55
-tags: 虚拟机
+tags: 
+- 虚拟机
+- 安装指北
 ---
 
 # Mac虚拟机安装指北(适用于Big Sur及Catalina)

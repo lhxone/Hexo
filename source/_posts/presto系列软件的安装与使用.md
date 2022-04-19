@@ -1,7 +1,10 @@
 ---
 title: presto系列软件的安装与使用
 date: 2022-03-31 11:23:10
-tags: 实习日记
+tags: 
+- 实习日记
+- 安装指北
+- presto-c
 ---
 
 
@@ -611,3 +614,97 @@ print('Hello world from process {0} at {1}.'.format(rank, node_name))
 ```sh
 mpiexec -n 3 python3 test.py
 ```
+
+
+## presto-c的spack安装代码
+
+{%codeblock package.py lang:python%}
+from spack import *
+from os import *
+
+class PrestoC(MakefilePackage):
+    """presto-c By lhxone"""
+
+    # FIXME: Add a proper url for your package's homepage here.
+    homepage = "https://blog.lhxone.com"
+    url      = "file:///es01/yeesuan/yeesuan003/source/presto-c.tar.gz"
+
+    # FIXME: Add a list of GitHub accounts to
+    # notify when the package is updated.
+    # maintainers = ['github_user1', 'github_user2']
+
+    
+    version('1.2.4', 'c7d69f3eb8680a54541d3525fbe46159539037aa6a5fb5ae59fb210a9e0034b1')
+ 
+    variant('mpi', default=False, description='Enable MPI')
+
+
+    depends_on('libx11')
+    depends_on('cfitsio')
+    depends_on('pgplot')
+    depends_on('libpng')
+    depends_on('fftw')
+    depends_on('curl')
+    depends_on('mpi', when = '+mpi')
+    depends_on('gglib', type=('build'))
+
+    def setup_build_environment(self, env):
+        env.append_path('LD_LIBRARY_PATH', self.stage.source_path + '/lib')
+        env.set('PRESTO', self.stage.source_path)
+
+    def edit(self, spec, prefix):
+        
+        with working_dir('src'):
+            makefile = FileFilter('Makefile')
+            makefile.filter(r'^\s*X11LINK\s*:=.*',  'X11LINK := -L' + spec['libx11'].prefix.lib +' -lX11')
+            makefile.filter(r'^\s*PNGLINK\s*:=.*', 'PNGLINK := -L' + spec['libpng'].prefix.lib + ' -lpng')
+            
+            makefile.filter(r'^\s*PGPLOTINC\s*=.*', 'PGPLOTINC = -I' + spec['pgplot'].prefix.include)
+            makefile.filter(r'^\s*PGPLOTLINK\s*=.*',  'PGPLOTLINK = -L'  + spec['pgplot'].prefix.lib + ' -lcpgplot -lpgplot $(X11LINK) $(PNGLINK)')
+            
+            # makefile.filter(r'^\s*FFTINC\s*:=.*',  'FFTINC := -I'  + spec['fftw'].prefix.include)
+            # makefile.filter(r'^\s*FFTLINK\s*:=.*',  'FFTLINK := -L'  + spec['fftw'].prefix.lib + ' -lfftw3 -lfftw3f')
+            makefile.filter(r'^\s*FFTINC\s*:=.*',  'FFTINC := -I/es01/yeesuan/yeesuan003/software/fftw/include')
+            makefile.filter(r'^\s*FFTLINK\s*:=.*',  'FFTLINK := -L/es01/yeesuan/yeesuan003/software/fftw/lib -lfftw3 -lfftw3f')
+            
+            # makefile.filter(r'^\s*CFITSIOINC\s*:=.*', 'CFITSIOINC := -I/es01/yeesuan/yeesuan003/software/cfitsio/include')
+            # makefile.filter(r'^\s*CFITSIOLINK\s*:=.*', 'CFITSIOLINK := -L/es01/yeesuan/yeesuan003/software/cfitsio/lib ')
+            makefile.filter(r'^\s*CFITSIOINC\s*:=.*', 'CFITSIOINC := -I' + spec['cfitsio'].prefix.include)
+            makefile.filter(r'^\s*CFITSIOLINK\s*:=.*', 'CFITSIOLINK := -L' + spec['cfitsio'].prefix.lib + ' -L' + spec['curl'].prefix.lib + ' -lm -lcfitsio -lcurl')
+            
+            #如果使用spec['glib']会报错
+            # ==> [2022-04-07-11:11:19.715615] Releasing read lock on fftw-3.3.10-sm7gxt7rfyvosnyv5nztr2ynnai2uv3d
+            # ==> [2022-04-07-11:11:19.716372] Error: presto-c-1.2.3-y6i7lvlmsuxopndcmd5voa5i75dkqwu7: Package was not installed
+            # ==> [2022-04-07-11:11:19.716511] InstallError: Installation request failed.  Refer to reported errors for failing package(s).
+            # ==> [2022-04-07-11:11:19.716556] Error: Installation request failed.  Refer to reported errors for failing package(s).
+            makefile.filter(r'^\s*GLIBINC\s*:=.*', 'GLIBINC := -I' + spec['gglib'].prefix.include + '/glib-2.0')
+            makefile.filter(r'^\s*GLIBLINK\s*:=.*', 'GLIBLINK := -L' + spec['gglib'].prefix.lib + ' -lglib-2.0')
+            # makefile.filter(r'^\s*GLIBINC\s*:=.*', 'GLIBINC := -I/es01/yeesuan/yeesuan003/software/glib/include/glib-2.0')
+            # makefile.filter(r'^\s*GLIBLINK\s*:=.*', 'GLIBLINK := -L/es01/yeesuan/yeesuan003/software/glib/lib -lglib-2.0')
+
+            # Enable mpi
+            if '+mpi' in self.spec:
+                makefile.filter('(mpicc)', 'mpiicc')
+
+    def build(self, spec, prefix):
+        with working_dir('src'):
+            make('makewisdom')
+            make('prep')
+            make()
+            if '+mpi' in self.spec:
+                make('mpi')
+
+    def install(self, spec, prefix):
+        mkdir(prefix.bin)
+        with working_dir('bin'):
+            install('*', prefix.bin)
+
+        mkdir(prefix.lib)
+        with working_dir('lib'):
+            install('*', prefix.lib)
+
+        mkdir(prefix.include)
+        with working_dir('include'):
+            install('*', prefix.include)
+
+{%endcodeblock%}
