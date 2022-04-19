@@ -5,7 +5,16 @@ tags:
 - 实习日记
 - 安装指北
 - FVCOM
+- 
 ---
+# FVCOM编译&测试
+
+FVCOM介绍：
+>FVCOM 是由 UMASSD-WHOI 联合开发的预测性、非结构化网格、有限体积、自由表面、3-D 原始方程沿海海洋环流模型。该模型由动量、连续性、温度、盐度和密度方程组成，并使用湍流闭合子模型进行物理和数学闭合。水平网格由非结构化三角形单元组成，不规则底部使用广义地形跟踪坐标呈现。由德国 Burchard 研究小组（Burchard，2002 年）开发的通用海洋湍流模型 (GOTM) 已添加到 FVCOM 中，以提供可选的垂直湍流闭合方案。FVCOM 是通过在非结构化三角形网格上以控制方程的积分形式进行的二阶精确离散通量计算来数值求解的。这种方法结合了有限元方法（网格灵活性）和有限差分方法（数值效率和代码简单性）的最佳特性，并提供了更好的局部和全局动量、质量、盐、热和示踪剂守恒的数值表示. 除了非结构化网格提供的拓扑灵活性和编码结构的简单性之外，FVCOM 准确求解标量守恒方程的能力使 FVCOM 非常适合许多沿海和跨学科科学应用。
+
+<video src="http://fvcom.smast.umassd.edu/wp-content/uploads/2014/01/pie_Salinity.mp4" type="video/mp4" poster="false.png" 
+       autoplay="autoplay" controls="controls" loop="-1" alt="你的浏览器不支持video标签">
+</video>
 
 # 编译前准备
 

@@ -1,10 +1,18 @@
 ---
 title: vasp编译&测试
 date: 2022-03-02 13:55:45
-tags: 实习日记
+tags: 
+- 实习日记
+- vasp
+- 分子动力学
 ---
 
-# 编译前准备
+# vasp编译&测试
+
+vasp介绍：
+>原子尺度材料模拟的计算机程序包，更知名为VASP，是用于执行从头计算量子力学的分子动力学(MD)使用Vanderbilt泛函，或投增强波的方法和一个平面波基组的程序包。理论基础是密度泛函理论(DFT)，但该程序还允许使用后-DFT更正，如混合函数混合密度泛函理论和哈特里–福克交换，多体扰动理论(GW近似)和随机相位近似方法内的动态电子相关。
+
+## 编译前准备
 
 - 执行以下命令以确保环境中含有```icc```,```icpc```,```mpiifort```等
 
@@ -20,11 +28,11 @@ spack load intel-parallel-studio@cluster.2019.5
 - 源码在```/es01/jnist/mirror```下可以找到,本次安装的版本为```5.4.4```
 
 
-## mkl(Math Kernel Library)
+### mkl(Math Kernel Library)
 
 其地址在```/es01/jnist/software/general/linux-centos7-cascadelake/gcc-10.2.0/intel-parallel-studio-cluster.2018.1-yn56mgyhtg5knpfmpgtcax3o3wfonhhp/compilers_and_libraries_2018.1.163/linux/mkl```,在使用前需载入```intel-parallel-studio@cluster.2019.5```
 
-## 并行fftw
+### 并行fftw
 
 这里选择自行编译并行fftw
 
@@ -40,9 +48,9 @@ mv fftw-3.3.9 fftw-mpi
 
 
 
-# 编译
+## 编译
 
-## 获取源码
+### 获取源码
 
 源码在```/es01/jnist/mirror```下可以找到,本次安装的版本为```5.4.4```,将源码移到```~/source```并解压
 
@@ -54,7 +62,7 @@ tar xzvf vasp.5.4.4.tgz
 
 
 
-## makefile配置
+### makefile配置
 
 在```vasp.5.4.4/arch```之下,提供了不同的```makefile```模版,这里使用```makefile.include.linux_intel```,并在此基础上对其进行修改
 
@@ -106,11 +114,11 @@ source ~/.bashrc
 ```
 
 
-# 测试运行
+## 测试运行
 
 [测试样例下载地址](http://124.222.217.156/static/file/vasp_suanli.tar.gz)
 
-## 本地运行
+### 本地运行
 
 ```shell
 wget http://124.222.217.156/static/file/vasp_suanli.tar.gz
@@ -119,7 +127,7 @@ cd vasp_suanli
 vasp_std
 ```
 
-## 使用slurm提交作业
+### 使用slurm提交作业
 
 这里采用```sbatch```提交作业的方式,脚本为```submit.sh```,其内容如下
 

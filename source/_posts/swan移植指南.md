@@ -1,7 +1,10 @@
 ---
 title: swan移植指南
 date: 2022-04-11 14:27:01
-tags: 实习日记
+tags: 
+- 实习日记
+- swan
+- 海洋科学
 ---
 
 # swan
