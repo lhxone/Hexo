@@ -131,4 +131,4 @@ export ww3_dir=/path/to/WAVEWATCH/WW3-6.07.1/model
 
 需要查看“work_case_01/log.mww3”日志中的“Elapsed time”数值，单位是“s”，数值越少性能越优。
 
-![Elapsed time](../static/images/img_waw.png)
+![Elapsed time](../../../../static/images/img_waw.png)
