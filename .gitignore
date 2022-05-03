@@ -8,3 +8,4 @@ public/
 *.zip
 *.pdf
 package-lock.json
+package 2.json
