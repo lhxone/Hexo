@@ -1,6 +1,0 @@
-{
-    "files.associations": {
-        "mpi.h": "c",
-        "stdio.h": "c"
-    }
-}
